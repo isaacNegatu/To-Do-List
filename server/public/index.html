@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>To Do List</title>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+
+  <link rel="stylesheet" href="vendors/angular-material.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+
+</head>
+
+<body ng-app="myApp" ng-controller="ToDoController as vm" ng-cloak layout="column" layout-align="start start">
+
+
+  <!-- tool bar starts here -->
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span class="md-flex">To-Do Application</span>
+    </div>
+  </md-toolbar>
+
+  <!-- too bar ends here  -->
+
+
+
+
+  <!-- this div is for side nav and all other contents ----------------------->
+  <div class="allContent" layout="row" flex="" layout-align="start none" id="popupContainer">
+
+    <!-- side navigation starts here  ------------------------------------->
+    <md-sidenav md-component-id="left" md-is-locked-open="true" class="md-sidenav-left" md-whiteframe="3" layout-align="start none">
+      <md-content layout="column" layout-align="">
+        <md-button ng-click="vm.showView('addTask')" class="md-raised md-primary newTaskButton" layout="row" layout-align="center center">
+          <i class="material-icons addIcon">
+            add_circle_outline
+          </i>
+          <p>
+            New Task
+          </p>
+        </md-button>
+      </md-content>
+      <md-content layout="column" layout-align="start">
+        <md-button ng-click="vm.showView('allTasks')">All Tasks</md-button>
+        <md-button>Unfinished</md-button>
+        <md-button>Tasks Done</md-button>
+        <md-button>Stats</md-button>
+      </md-content>
+
+    </md-sidenav>
+
+    <!-- side navigation endes here  --------------------------------------->
+
+
+
+
+    <!-- this content is for all dynamic content --------------------------->
+    <md-content layout="column" layout-margin >
+
+
+      <!-- this div is to add a new task ---------------------------------->
+      <div ng-if="vm.views.addTask" layout="column" md-whiteframe="3">
+        <section>
+          <md-toolbar>
+            <div style="visibility: hidden;">
+              I couln't figure out how to make the field wider. will use a hidden text to widen the frame.
+            </div>
+            <div class="md-toolbar-tools">
+              <span class="md-flex">New Task - {{vm.newTask.name}}</span>
+            </div>
+          </md-toolbar>
+
+          <md-content layout-padding>
+            <form name="newTaskForm" layout-padding  layout="column">
+
+            <div layout="row">
+
+              <md-input-container flex="70">
+                <label>Task Name</label>
+                <input name="taskName" ng-model="vm.newTask.name" required>
+              </md-input-container>
+
+              <md-input-container flex="30">
+                <label>Due Date</label>
+                <md-datepicker name="dueDate" ng-model="vm.newTask.dueDate" md-open-on-focus="" required></md-datepicker>
+              </md-input-container>
+
+            </div>
+
+            <md-input-container>
+              <label>Catagory</label>
+              <md-select name="catagory" ng-model="vm.newTask.catagory">
+                <md-option value="work">Work</md-option>
+                <md-option value="school">School</md-option>
+                <md-option value="chores">Chores</md-option>
+                <md-option value="grocery">Grocery</md-option>
+                <md-option value="misc">Miscellaneous</md-option>
+              </md-select>
+            </md-input-container>
+
+
+            <md-input-container>
+              <label>Priority</label>
+              <md-select name="priority" ng-model="vm.newTask.priority" required>
+                <md-option value="critical">Critical</md-option>
+                <md-option value="important">Imortant</md-option>
+                <md-option value="normal">Normal</md-option>
+                <md-option value="low">Low</md-option>
+              </md-select>
+            </md-input-container>
+
+            <md-input-container class="md-block" md-auto-hide="false">
+              <label>Description</label>
+              <textarea ng-model="vm.newTask.description" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+          </form>
+
+            <md-button ng-hide="newTaskForm.taskName.$invalid  || newTaskForm.dueDate.$invalid || newTaskForm.priority.$invalid" ng-click="vm.addNewTask(vm.newTask, $event)" class="md-raised newTaskButton" layout="row" layout-align="center center">
+              Submit
+            </md-button>
+
+
+
+          </md-content>
+
+
+        </section>
+      </div>
+      <!-- new task div ends here  -->
+
+
+    </md-content>
+    <!-- dynamic content ends here -->
+
+  </div>
+
+
+
+
+
+
+
+  <script src="vendors/angular.min.js"></script>
+  <script src="vendors/angular-aria.min.js"></script>
+  <script src="vendors/angular-material.min.js"></script>
+  <script src="vendors/angular-animate.min.js"></script>
+
+  <script type="text/javascript" src="scripts/client.js"></script>
+</body>
+
+</html>
