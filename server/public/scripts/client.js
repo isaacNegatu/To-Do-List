@@ -149,6 +149,8 @@ let toDoApp = angular.module('myApp', ['ngMaterial'])
         }).then(function(response) {
           self.getAllTasks();
         });
+      }, function() {
+        console.log('not deleted');
       });
     };
 
@@ -232,6 +234,46 @@ let toDoApp = angular.module('myApp', ['ngMaterial'])
             break;
         }
       }
+    };
+
+    self.getDatePlot = function() {
+      let tempList = self.toDoList;
+
+      let dateAry = [];
+      let countAry = [];
+
+      for (let i = 0; i < tempList.length; i++) {
+        function checkAdult(date) {
+          return date == tempList[i].dueDate;
+        }
+
+        let taskDate = dateAry.findIndex(checkAdult);
+
+        if (taskDate == -1) {
+          dateAry.push(tempList[i].dueDate);
+          countAry.push(1);
+        } else {
+          countAry[taskDate]++;
+        }
+
+      }
+
+
+      return [[dateAry], [countAry]];
+
+    };
+
+
+    self.graph = function(){
+      let data = self.getDatePlot();
+
+      let plotData = [{
+        x : data[0],
+        y : data[1],
+        type : 'scatter'
+      }];
+
+      Plotly.newPlot('graph', plotData);
     };
 
 

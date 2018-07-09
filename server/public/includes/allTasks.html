@@ -10,8 +10,8 @@
   </md-select>
 </md-input-container>
 <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" md-gridlist-span=“1”>
-  <md-grid-tile ng-repeat="toDo in vm.toDoList | filter : filterCategory" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-    <div layout-fill md-colors="{background: '{{toDo.color}}'}">
+  <md-grid-tile ng-repeat="toDo in vm.toDoList | filter : filterCategory" class="{{toDo.priority}}" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+    <div layout-fill >
       <div layout-padding>
 
         <h2>{{toDo.name}}</h1>

@@ -29,9 +29,6 @@ let toDoListSchema = new Schema({
   status : {
     type : Boolean,
     default : false
-  },
-  color : {
-    type : String
   }
 });
 

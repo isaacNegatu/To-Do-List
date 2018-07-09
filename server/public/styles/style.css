@@ -37,3 +37,23 @@ header {
 md-progress-circular{
   height: 500px;
 }
+
+.Critical {
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+}
+
+.Important{
+  background-color: rgba(255, 0, 0, 0.4);
+  color: black;
+}
+
+.Normal{
+  background-color: rgba(0, 127, 127, 0.6);
+  color: white;
+}
+
+.Low{
+  background-color: rgba(0, 127, 127, 0.2);
+  color: black;
+}

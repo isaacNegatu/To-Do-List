@@ -6,12 +6,7 @@ const ToDo = require('../models/toDoList.schema');
 
 
 router.post('/' , (req, res) => {
-  switch (req.body.priority){
-    case 'Critical': req.body.color = 'red'; break;
-    case 'Important': req.body.color = 'orange'; break;
-    case 'Normal' : req.body.color = 'yellow'; break;
-    case 'Low' : req.body.color = 'brown'; break;
-  }
+  
   let newToDo = new ToDo(req.body);
 
   newToDo.save().then((data) =>{
