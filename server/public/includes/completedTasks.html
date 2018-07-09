@@ -1,0 +1,26 @@
+<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" md-gridlist-span=“1”>
+  <md-grid-tile ng-repeat="toDo in vm.completed" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+    <div layout-fill md-colors="{background: '{{toDo.color}}'}">
+      <div layout-padding>
+
+        <h2>{{toDo.name}}</h1>
+      <p>{{toDo.description}}</p>
+      <p>Date Created : {{toDo.dateCreated | date:'yyyy-MM-dd'}}</p>
+      <p>
+        Due Date : {{toDo.dueDate | date:'yyyy-MM-dd'}}
+      </p>
+      <p>Category : {{toDo.category}}</p>
+      <p>
+        Priority : {{toDo.priority}}
+      </p>
+      <md-grid-tile-footer layout="column" layout-align="space-around center">
+        <div ng-if="toDo.status" layout="row" layout-align="center center">
+          <md-content class="doneIcon"> <i class="material-icons">done_outline</i></md-content>
+          <md-button ng-click="vm.deleteTask(toDo)" class="md-raised md-warn">Delete</md-button>
+        </div>
+      </md-grid-tile-footer>
+    </div>
+  </div>
+
+  </md-grid-tile>
+</md-grid-list>

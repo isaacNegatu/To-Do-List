@@ -1,0 +1,32 @@
+
+  <!-- side navigation starts here  ------------------------------------->
+  
+    <a href="#" id="headerLink">
+      <header ng-click="vm.showView('allTasks')">
+
+        <img ng-src="http://www.nunki.com.au/templates/nunki2016/img/nunki_logo.png" alt="" width="100%">
+        <h1 class="heading">To-Do App</h1>
+      </header>
+    </a>
+    <md-content layout="column" layout-align="">
+
+
+      <md-button ng-click="vm.showView('addTask')" class="md-raised md-primary newTaskButton" layout="row" layout-align="center center">
+        <i class="material-icons addIcon">
+          add_circle_outline
+        </i>
+        <p>
+          New Task
+        </p>
+      </md-button>
+    </md-content>
+    <md-content layout="column" layout-align="start">
+      <md-button ng-click="vm.showView('allTasks')">All Tasks</md-button>
+      <md-button ng-click="vm.showView('uncompleted')">Uncompleted Tasks</md-button>
+      <md-button ng-click="vm.showView('completed')">Completed Tasks</md-button>
+      <md-button ng-click="vm.showView('stats')">Stats</md-button>
+    </md-content>
+
+
+
+  <!-- side navigation endes here  --------------------------------------->

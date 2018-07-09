@@ -14,11 +14,11 @@ let toDoApp = angular.module('myApp', ['ngMaterial'])
     self.progress = 0;
 
     self.categorizedCount = {
-      work : 0,
-      school : 0,
-      chores : 0,
-      grocery : 0,
-      miscellaneous : 0
+      work: 0,
+      school: 0,
+      chores: 0,
+      grocery: 0,
+      miscellaneous: 0
     };
 
     self.views = {
@@ -135,28 +135,30 @@ let toDoApp = angular.module('myApp', ['ngMaterial'])
 
 
     self.deleteTask = function(task) {
-      $http({
-        url: `/todo/${task._id}`,
-        method: 'DELETE'
-      }).then(function(response) {
-        $mdDialog.show(
-          $mdDialog.alert()
-          .parent(angular.element(document.querySelector('#popupContainer')))
-          .clickOutsideToClose(true)
-          .title('Task Successfully Deleted')
-          .ok('Got it!')
-        ).then(function() {
+
+      $mdDialog.show(
+        $mdDialog.confirm()
+        .title('Are you sure you want to delete this task?')
+        .textContent('It\'l never be recoverd')
+        .ok('Yes')
+        .cancel('Cancel')
+      ).then(function() {
+        $http({
+          url: `/todo/${task._id}`,
+          method: 'DELETE'
+        }).then(function(response) {
           self.getAllTasks();
         });
       });
     };
 
 
+
     self.setUpEdit = function(task) {
       self.toBeEdited = task;
     };
 
-    self.editTask = function (task) {
+    self.editTask = function(task) {
       $http({
         url: `/todo/${task._id}`,
         method: 'PUT',
@@ -179,45 +181,55 @@ let toDoApp = angular.module('myApp', ['ngMaterial'])
     };
 
 
-    self.doneNotDone = function (){
+    self.doneNotDone = function() {
       self.uncompleted = [];
       self.completed = [];
-      for(let todo of self.toDoList){
-        if(todo.status){
+      for (let todo of self.toDoList) {
+        if (todo.status) {
           self.completed.push(todo);
-        }else{
+        } else {
           self.uncompleted.push(todo);
         }
       }
     };
 
-    self.setPercentDone = function(){
+    self.setPercentDone = function() {
       let allToDoTasks = 0;
       let finishedTasks = 0;
-      for(let todo of self.toDoList){
+      for (let todo of self.toDoList) {
         allToDoTasks++;
-        if(todo.status){
+        if (todo.status) {
           finishedTasks++;
         }
       }
 
-      self.progress = allToDoTasks == 0 ? 0 : Number.parseFloat((finishedTasks/allToDoTasks) *100).toFixed(0);
+      self.progress = allToDoTasks == 0 ? 0 : Number.parseFloat((finishedTasks / allToDoTasks) * 100).toFixed(0);
     };
 
 
-    self.setCategory = function(){
-      for(let k in self.categorizedCount){
+    self.setCategory = function() {
+      for (let k in self.categorizedCount) {
         self.categorizedCount[k] = 0;
       }
 
 
-      for(let todo of self.toDoList){
+      for (let todo of self.toDoList) {
         switch (todo.category) {
-          case 'Work' : self.categorizedCount.work++; break;
-          case 'School' : self.categorizedCount.school++; break;
-          case 'Chores' : self.categorizedCount.chores++; break;
-          case 'Grocery' : self.categorizedCount.grocery++; break;
-          case 'Miscellaneous' : self.categorizedCount.miscellaneous++; break;
+          case 'Work':
+            self.categorizedCount.work++;
+            break;
+          case 'School':
+            self.categorizedCount.school++;
+            break;
+          case 'Chores':
+            self.categorizedCount.chores++;
+            break;
+          case 'Grocery':
+            self.categorizedCount.grocery++;
+            break;
+          case 'Miscellaneous':
+            self.categorizedCount.miscellaneous++;
+            break;
         }
       }
     };

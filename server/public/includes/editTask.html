@@ -1,0 +1,61 @@
+<section>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span class="md-flex">Edit Task - {{vm.toBeEdited.name}}</span>
+    </div>
+  </md-toolbar>
+
+  <md-content layout-padding>
+    <form name="editTaskForm" layout-padding layout="column">
+
+      <div layout="row">
+
+        <md-input-container flex="70">
+          <label>Task Name</label>
+          <input name="editTaskName" ng-model="vm.toBeEdited.name" required>
+        </md-input-container>
+
+        <md-input-container flex="30">
+          <label>Due Date</label>
+          <md-datepicker name="editDueDate" ng-model="vm.toBeEdited.dueDate" md-open-on-focus="" required></md-datepicker>
+        </md-input-container>
+
+      </div>
+
+      <md-input-container>
+        <label>Category</label>
+        <md-select name="editCategory" ng-model="vm.toBeEdited.category">
+          <md-option value="Work">Work</md-option>
+          <md-option value="School">School</md-option>
+          <md-option value="Chores">Chores</md-option>
+          <md-option value="Grocery">Grocery</md-option>
+          <md-option value="Miscellaneous">Miscellaneous</md-option>
+        </md-select>
+      </md-input-container>
+
+
+      <md-input-container>
+        <label>Priority</label>
+        <md-select name="editPriority" ng-model="vm.toBeEdited.priority" required>
+          <md-option value="Critical">Critical</md-option>
+          <md-option value="Important">Imortant</md-option>
+          <md-option value="Normal">Normal</md-option>
+          <md-option value="Low">Low</md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container class="md-block" md-auto-hide="false">
+        <label>Description</label>
+        <textarea ng-model="vm.toBeEdited.description" rows="5" md-select-on-focus></textarea>
+      </md-input-container>
+    </form>
+
+    <md-button ng-hide="editTaskForm.editTaskName.$invalid  || editTaskForm.editDueDate.$invalid || editTaskForm.editPriority.$invalid" ng-click="vm.editTask(vm.toBeEdited, $event); vm.toBeEdited={}" class="md-raised newTaskButton" layout="row" layout-align="center center">
+      Done Editing
+    </md-button>
+
+  </md-content>
+
+
+
+</section>

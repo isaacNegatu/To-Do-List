@@ -1,0 +1,39 @@
+<md-content layout="column" layout-align="center center">
+  <md-progress-circular md-mode="determinate" value="{{vm.progress}}" md-diameter="200"></md-progress-circular>
+
+  <h2>You're {{vm.progress}}% Done</h2>
+
+</md-content>
+<hr />
+<md-list>
+  <md-list-item class="md-2-line" layout="row">
+    <md-icon>work</md-icon>
+    <div class="md-list-item-text">
+      <h3>Work : {{vm.categorizedCount.work}} </h3>
+    </div>
+  </md-list-item>
+  <md-list-item class="md-2-line" layout="row">
+    <md-icon>school</md-icon>
+    <div class="md-list-item-text">
+      <h3>School : {{vm.categorizedCount.school}} </h3>
+    </div>
+  </md-list-item>
+  <md-list-item class="md-2-line" layout="row">
+    <md-icon>home</md-icon>
+    <div class="md-list-item-text">
+      <h3>Chores : {{vm.categorizedCount.chores}} </h3>
+    </div>
+  </md-list-item>
+  <md-list-item class="md-2-line" layout="row">
+    <md-icon>local_grocery_store</md-icon>
+    <div class="md-list-item-text">
+      <h3>Grocery : {{vm.categorizedCount.grocery}} </h3>
+    </div>
+  </md-list-item>
+  <md-list-item class="md-2-line" layout="row">
+    <md-icon>all_inclusive</md-icon>
+    <div class="md-list-item-text">
+      <h3>Miscellaneous : {{vm.categorizedCount.miscellaneous}} </h3>
+    </div>
+  </md-list-item>
+</md-list>
