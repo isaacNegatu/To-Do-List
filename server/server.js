@@ -13,7 +13,7 @@ let PORT = process.env.PORT || 4000;
 
 let db = 'mongodb://localhost:27017/toDoDatabase';
 
-mongoose.connect(db);
+mongoose.connect(db, { useNewUrlParser : true });
 mongoose.connection.on('connected', ()=>{
   console.log('mongo connection successful');
 });

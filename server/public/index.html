@@ -16,112 +16,122 @@
 
 </head>
 
-<body ng-app="myApp" ng-controller="ToDoController as vm" ng-cloak layout="column" layout-align="start start">
+<body ng-app="myApp" ng-controller="ToDoController as vm" ng-cloak layout="row" layout-align="start start">
 
 
-  <!-- tool bar starts here -->
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <span class="md-flex">To-Do Application</span>
-    </div>
-  </md-toolbar>
 
-  <!-- too bar ends here  -->
+  <!-- side navigation starts here  ------------------------------------->
+  <md-sidenav md-component-id="left" md-is-locked-open="true" class="md-sidenav-left" md-whiteframe="3" layout-align="start none" md-disable-backdrop="true" layout-padding>
+    <a href="#" id="headerLink">
+      <header ng-click="vm.showView('allTasks')">
+
+        <img ng-src="http://www.nunki.com.au/templates/nunki2016/img/nunki_logo.png" alt="" width="100%">
+        <h1 class="heading">To-Do App</h1>
+      </header>
+    </a>
+    <md-content layout="column" layout-align="">
+
+
+      <md-button ng-click="vm.showView('addTask')" class="md-raised md-primary newTaskButton" layout="row" layout-align="center center">
+        <i class="material-icons addIcon">
+          add_circle_outline
+        </i>
+        <p>
+          New Task
+        </p>
+      </md-button>
+    </md-content>
+    <md-content layout="column" layout-align="start">
+      <md-button ng-click="vm.showView('allTasks')">All Tasks</md-button>
+      <md-button ng-click="vm.showView('uncompleted')">Uncompleted Tasks</md-button>
+      <md-button ng-click="vm.showView('completed')">Completed Tasks</md-button>
+      <md-button ng-click="vm.showView('stats')">Stats</md-button>
+    </md-content>
+
+  </md-sidenav>
+
+  <!-- side navigation endes here  --------------------------------------->
+
 
 
 
 
   <!-- this div is for side nav and all other contents ----------------------->
-  <div class="allContent" layout="row" flex="" layout-align="start none" id="popupContainer">
+  <div class="allContent" layout="column" flex="" layout-align="start none" id="popupContainer">
 
-    <!-- side navigation starts here  ------------------------------------->
-    <md-sidenav md-component-id="left" md-is-locked-open="true" class="md-sidenav-left" md-whiteframe="3" layout-align="start none">
-      <md-content layout="column" layout-align="">
-        <md-button ng-click="vm.showView('addTask')" class="md-raised md-primary newTaskButton" layout="row" layout-align="center center">
-          <i class="material-icons addIcon">
-            add_circle_outline
-          </i>
-          <p>
-            New Task
-          </p>
-        </md-button>
-      </md-content>
-      <md-content layout="column" layout-align="start">
-        <md-button ng-click="vm.showView('allTasks')">All Tasks</md-button>
-        <md-button>Unfinished</md-button>
-        <md-button>Tasks Done</md-button>
-        <md-button>Stats</md-button>
-      </md-content>
+    <!-- tool bar starts here -->
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span class="md-flex">{{vm.currentView}}</span>
+      </div>
+    </md-toolbar>
 
-    </md-sidenav>
-
-    <!-- side navigation endes here  --------------------------------------->
+    <!-- tool bar ends here  -->
 
 
 
 
     <!-- this content is for all dynamic content --------------------------->
-    <md-content layout="column" layout-margin >
-
+    <md-content layout="column" layout-margin>
 
       <!-- this div is to add a new task ---------------------------------->
-      <div ng-if="vm.views.addTask" layout="column" md-whiteframe="3">
+      <div ng-if="vm.views.addTask.state" layout="column" md-whiteframe="3">
         <section>
           <md-toolbar>
-            <div style="visibility: hidden;">
-              I couln't figure out how to make the field wider. will use a hidden text to widen the frame.
-            </div>
+
             <div class="md-toolbar-tools">
               <span class="md-flex">New Task - {{vm.newTask.name}}</span>
             </div>
           </md-toolbar>
 
+
+
           <md-content layout-padding>
-            <form name="newTaskForm" layout-padding  layout="column">
+            <form name="newTaskForm" layout-padding layout="column">
 
-            <div layout="row">
+              <div layout="row">
 
-              <md-input-container flex="70">
-                <label>Task Name</label>
-                <input name="taskName" ng-model="vm.newTask.name" required>
+                <md-input-container flex="70">
+                  <label>Task Name</label>
+                  <input name="taskName" ng-model="vm.newTask.name" required>
+                </md-input-container>
+
+                <md-input-container flex="30">
+                  <label>Due Date</label>
+                  <md-datepicker name="dueDate" ng-model="vm.newTask.dueDate" md-open-on-focus="" required></md-datepicker>
+                </md-input-container>
+
+              </div>
+
+              <md-input-container>
+                <label>Category</label>
+                <md-select name="category" ng-model="vm.newTask.category">
+                  <md-option value="Work">Work</md-option>
+                  <md-option value="School">School</md-option>
+                  <md-option value="Chores">Chores</md-option>
+                  <md-option value="Grocery">Grocery</md-option>
+                  <md-option value="Miscellaneous">Miscellaneous</md-option>
+                </md-select>
               </md-input-container>
 
-              <md-input-container flex="30">
-                <label>Due Date</label>
-                <md-datepicker name="dueDate" ng-model="vm.newTask.dueDate" md-open-on-focus="" required></md-datepicker>
+
+              <md-input-container>
+                <label>Priority</label>
+                <md-select name="priority" ng-model="vm.newTask.priority" required>
+                  <md-option value="Critical">Critical</md-option>
+                  <md-option value="Important">Imortant</md-option>
+                  <md-option value="Normal">Normal</md-option>
+                  <md-option value="Low">Low</md-option>
+                </md-select>
               </md-input-container>
 
-            </div>
+              <md-input-container class="md-block" md-auto-hide="false">
+                <label>Description</label>
+                <textarea ng-model="vm.newTask.description" rows="5" md-select-on-focus></textarea>
+              </md-input-container>
+            </form>
 
-            <md-input-container>
-              <label>Catagory</label>
-              <md-select name="catagory" ng-model="vm.newTask.catagory">
-                <md-option value="work">Work</md-option>
-                <md-option value="school">School</md-option>
-                <md-option value="chores">Chores</md-option>
-                <md-option value="grocery">Grocery</md-option>
-                <md-option value="misc">Miscellaneous</md-option>
-              </md-select>
-            </md-input-container>
-
-
-            <md-input-container>
-              <label>Priority</label>
-              <md-select name="priority" ng-model="vm.newTask.priority" required>
-                <md-option value="critical">Critical</md-option>
-                <md-option value="important">Imortant</md-option>
-                <md-option value="normal">Normal</md-option>
-                <md-option value="low">Low</md-option>
-              </md-select>
-            </md-input-container>
-
-            <md-input-container class="md-block" md-auto-hide="false">
-              <label>Description</label>
-              <textarea ng-model="vm.newTask.description" rows="5" md-select-on-focus></textarea>
-            </md-input-container>
-          </form>
-
-            <md-button ng-hide="newTaskForm.taskName.$invalid  || newTaskForm.dueDate.$invalid || newTaskForm.priority.$invalid" ng-click="vm.addNewTask(vm.newTask, $event)" class="md-raised newTaskButton" layout="row" layout-align="center center">
+            <md-button ng-hide="newTaskForm.taskName.$invalid  || newTaskForm.dueDate.$invalid || newTaskForm.priority.$invalid" ng-click="vm.addNewTask(vm.newTask, $event); vm.newTask={}" class="md-raised newTaskButton" layout="row" layout-align="center center">
               Submit
             </md-button>
 
@@ -135,10 +145,246 @@
       <!-- new task div ends here  -->
 
 
+      <!-- all tasks div starts here -->
+      <div ng-if="vm.views.allTasks.state" layout="column" layout-padding>
+        <md-input-container>
+          <label>Filter by Category</label>
+          <md-select name="category" ng-model="filterCategory">
+            <md-option value={{undefined}}>All</md-option>
+            <md-option value="Work">Work</md-option>
+            <md-option value="School">School</md-option>
+            <md-option value="Chores">Chores</md-option>
+            <md-option value="Grocery">Grocery</md-option>
+            <md-option value="Miscellaneous">Miscellaneous</md-option>
+          </md-select>
+        </md-input-container>
+        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" md-gridlist-span=“1”>
+          <md-grid-tile ng-repeat="toDo in vm.toDoList | filter : filterCategory" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+            <div layout-fill md-colors="{background: '{{toDo.color}}'}">
+              <div layout-padding>
+
+                <h2>{{toDo.name}}</h1>
+              <p>{{toDo.description}}</p>
+              <p>Date Created : {{toDo.dateCreated | date:'yyyy-MM-dd'}}</p>
+              <p>
+                Due Date : {{toDo.dueDate | date:'yyyy-MM-dd'}}
+              </p>
+              <p>Category : {{toDo.category}}</p>
+              <p>
+                Priority : {{toDo.priority}}
+              </p>
+              <p ng-if="toDo.status">Status : Done </p>
+              <p ng-if="!toDo.status">Status : Not Done</p>
+              <md-grid-tile-footer layout="column" layout-align="space-around center">
+                <div ng-if="!toDo.status">
+                <md-button ng-click="vm.markDone(toDo)" md-colors="{background: 'green'}"class="md-raised md-primary">Mark Done</md-button>
+                <md-button ng-click="vm.setUpEdit(toDo); vm.showView('edit')" class="md-raised md-primary">Edit</md-button>
+                <md-button ng-click="vm.deleteTask(toDo)" class="md-raised md-warn">Delete</md-button>
+                </div>
+                <div ng-if="toDo.status" layout="row" layout-align="center center">
+                  <md-content class="doneIcon"> <i class="material-icons">done_outline</i></md-content>
+                  <md-button ng-click="vm.deleteTask(toDo)" class="md-raised md-warn">Delete</md-button>
+                </div>
+              </md-grid-tile-footer>
+            </div>
+          </div>
+
+          </md-grid-tile>
+        </md-grid-list>
+        <br>
+      </div>
+      <!-- all tasks div ends here -->
+
+
+
+      <!-- edit task div starts here -->
+      <div ng-if="vm.views.edit.state" layout="column" md-whiteframe="3">
+        <section>
+          <md-toolbar>
+            <div class="md-toolbar-tools">
+              <span class="md-flex">Edit Task - {{vm.toBeEdited.name}}</span>
+            </div>
+          </md-toolbar>
+
+          <md-content layout-padding>
+            <form name="editTaskForm" layout-padding layout="column">
+
+              <div layout="row">
+
+                <md-input-container flex="70">
+                  <label>Task Name</label>
+                  <input name="editTaskName" ng-model="vm.toBeEdited.name" required>
+                </md-input-container>
+
+                <md-input-container flex="30">
+                  <label>Due Date</label>
+                  <md-datepicker name="editDueDate" ng-model="vm.toBeEdited.dueDate" md-open-on-focus="" required></md-datepicker>
+                </md-input-container>
+
+              </div>
+
+              <md-input-container>
+                <label>Category</label>
+                <md-select name="editCategory" ng-model="vm.toBeEdited.category">
+                  <md-option value="Work">Work</md-option>
+                  <md-option value="School">School</md-option>
+                  <md-option value="Chores">Chores</md-option>
+                  <md-option value="Grocery">Grocery</md-option>
+                  <md-option value="Miscellaneous">Miscellaneous</md-option>
+                </md-select>
+              </md-input-container>
+
+
+              <md-input-container>
+                <label>Priority</label>
+                <md-select name="editPriority" ng-model="vm.toBeEdited.priority" required>
+                  <md-option value="Critical">Critical</md-option>
+                  <md-option value="Important">Imortant</md-option>
+                  <md-option value="Normal">Normal</md-option>
+                  <md-option value="Low">Low</md-option>
+                </md-select>
+              </md-input-container>
+
+              <md-input-container class="md-block" md-auto-hide="false">
+                <label>Description</label>
+                <textarea ng-model="vm.toBeEdited.description" rows="5" md-select-on-focus></textarea>
+              </md-input-container>
+            </form>
+
+            <md-button ng-hide="editTaskForm.editTaskName.$invalid  || editTaskForm.editDueDate.$invalid || editTaskForm.editPriority.$invalid" ng-click="vm.editTask(vm.toBeEdited, $event); vm.toBeEdited={}" class="md-raised newTaskButton" layout="row" layout-align="center center">
+              Done Editing
+            </md-button>
+
+          </md-content>
+
+
+
+        </section>
+
+
+      </div>
+      <!-- edit task div ends here  -->
+
+
+
+      <!-- uncompleted tasks div start here  -->
+      <div ng-if="vm.views.uncompleted.state">
+        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" md-gridlist-span=“1”>
+          <md-grid-tile ng-repeat="toDo in vm.uncompleted" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+            <div layout-fill md-colors="{background: '{{toDo.color}}'}">
+              <div layout-padding>
+
+                <h2>{{toDo.name}}</h1>
+              <p>{{toDo.description}}</p>
+              <p>Date Created : {{toDo.dateCreated | date:'yyyy-MM-dd'}}</p>
+              <p>
+                Due Date : {{toDo.dueDate | date:'yyyy-MM-dd'}}
+              </p>
+              <p>category : {{toDo.category}}</p>
+              <p>
+                Priority : {{toDo.priority}}
+              </p>
+              <md-grid-tile-footer layout="column" layout-align="space-around center">
+                <md-button ng-click="vm.markDone(toDo)" md-colors="{background: 'green'}"class="md-raised md-primary">Mark Done</md-button>
+                <md-button ng-click="vm.setUpEdit(toDo); vm.showView('edit')" class="md-raised md-primary">Edit</md-button>
+                <md-button ng-click="vm.deleteTask(toDo)" class="md-raised md-warn">Delete</md-button>
+              </md-grid-tile-footer>
+            </div>
+          </div>
+
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+
+
+
+      <!-- uncompleted tasks div ends here  -->
+
+
+      <!-- completed tasks div starts here -->
+      <div ng-if="vm.views.completed.state">
+        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" md-gridlist-span=“1”>
+          <md-grid-tile ng-repeat="toDo in vm.completed" md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+            <div layout-fill md-colors="{background: '{{toDo.color}}'}">
+              <div layout-padding>
+
+                <h2>{{toDo.name}}</h1>
+              <p>{{toDo.description}}</p>
+              <p>Date Created : {{toDo.dateCreated | date:'yyyy-MM-dd'}}</p>
+              <p>
+                Due Date : {{toDo.dueDate | date:'yyyy-MM-dd'}}
+              </p>
+              <p>Category : {{toDo.category}}</p>
+              <p>
+                Priority : {{toDo.priority}}
+              </p>
+              <md-grid-tile-footer layout="column" layout-align="space-around center">
+                <div ng-if="toDo.status" layout="row" layout-align="center center">
+                  <md-content class="doneIcon"> <i class="material-icons">done_outline</i></md-content>
+                  <md-button ng-click="vm.deleteTask(toDo)" class="md-raised md-warn">Delete</md-button>
+                </div>
+              </md-grid-tile-footer>
+            </div>
+          </div>
+
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+
+      <!-- completed tasks div ends here -->
+
+      <!-- stats div starts here  -->
+        <div ng-if="vm.views.stats.state">
+          <md-content layout="column" layout-align="center center">
+            <md-progress-circular md-mode="determinate" value="{{vm.progress}}" md-diameter="200"></md-progress-circular>
+
+            <h2>You're {{vm.progress}}% Done</h2>
+
+          </md-content>
+          <hr />
+          <md-list>
+            <md-list-item class="md-2-line" layout="row">
+              <md-icon>work</md-icon>
+              <div class="md-list-item-text">
+                <h3>Work : {{vm.categorizedCount.work}} </h3>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" layout="row">
+              <md-icon>school</md-icon>
+              <div class="md-list-item-text">
+                <h3>School : {{vm.categorizedCount.school}} </h3>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" layout="row">
+              <md-icon>home</md-icon>
+              <div class="md-list-item-text">
+                <h3>Chores : {{vm.categorizedCount.chores}} </h3>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" layout="row">
+              <md-icon>local_grocery_store</md-icon>
+              <div class="md-list-item-text">
+                <h3>Grocery : {{vm.categorizedCount.grocery}} </h3>
+              </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" layout="row">
+              <md-icon>all_inclusive</md-icon>
+              <div class="md-list-item-text">
+                <h3>Miscellaneous : {{vm.categorizedCount.miscellaneous}} </h3>
+              </div>
+            </md-list-item>
+          </md-list>
+
+
+    </div>
+    <!-- stats div ends here -->
+
+
+
     </md-content>
     <!-- dynamic content ends here -->
 
-  </div>
+    </div>
 
 
 
@@ -146,12 +392,12 @@
 
 
 
-  <script src="vendors/angular.min.js"></script>
-  <script src="vendors/angular-aria.min.js"></script>
-  <script src="vendors/angular-material.min.js"></script>
-  <script src="vendors/angular-animate.min.js"></script>
+    <script src="vendors/angular.min.js"></script>
+    <script src="vendors/angular-aria.min.js"></script>
+    <script src="vendors/angular-material.min.js"></script>
+    <script src="vendors/angular-animate.min.js"></script>
 
-  <script type="text/javascript" src="scripts/client.js"></script>
+    <script type="text/javascript" src="scripts/client.js"></script>
 </body>
 
 </html>

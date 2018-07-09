@@ -1,3 +1,6 @@
+body{
+  font-weight: bold;
+}
 .addIcon {
   font-size: 30px;
 }
@@ -5,4 +8,32 @@
 .newTaskButton p{
   font-size: 20px;
   padding-left: 0.5em;
+}
+
+.heading{
+  text-align: center
+}
+
+md-sidenav{
+  height: 100%;
+}
+
+
+.doneIcon{
+  background: transparent;
+}
+
+header {
+  background-image: none;
+  outline: 0;
+  box-shadow: none;
+}
+
+#headerLink{
+  color: black;
+  text-decoration : none;
+}
+
+md-progress-circular{
+  height: 500px;
 }

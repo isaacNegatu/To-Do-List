@@ -7,10 +7,10 @@ let toDoListSchema = new Schema({
     type : Date,
     default : Date.now
   },
-  catagory : {
+  category : {
     type : String,
     required : true,
-    default : 'miscellaneous'
+    default : 'Miscellaneous'
   },
   name : {
     type : String,
@@ -22,9 +22,16 @@ let toDoListSchema = new Schema({
   description : {
     type : String
   },
-  priority : {           
+  priority : {
     type : String,
     required : true
+  },
+  status : {
+    type : Boolean,
+    default : false
+  },
+  color : {
+    type : String
   }
 });
 
